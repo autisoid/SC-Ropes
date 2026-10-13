@@ -902,7 +902,8 @@ class CRopeSegment : ScriptBaseAnimating
 // Purpose: A rope with a number of segments.
 //          Uses a Verlet integrator with dampened springs to simulate rope physics.
 //-----------------------------------------------------------------------------
-class CRope : ScriptBaseAnimating {
+class CRope : ScriptBaseAnimating
+{
     array< CRopeSegment@ > m_rgpSegments; // MAX_SEGMENTS
     uint m_uiSegments;    // Segments amount...
 
@@ -1681,12 +1682,15 @@ class CRope : ScriptBaseAnimating {
     bool IsAcceptingAttachment( void )
     {
         // xWhitey: Now CPlayerData stores m_flDetachTime
+        // xWhitey (10/13/2026): I forgot here a check for m_bObjectAttached and now two people can hang on a rope,
+        // and if the second person presses SPACE, they'll teleport to "0 0 0" :DDD
 //      if ( g_Engine.time - m_flDetachTime > 2.0f && !m_bObjectAttached )
+        if ( !m_bObjectAttached )
         {
             return !m_bDisallowPlayerAttachment;
         }
 
-//      return FALSE;
+      return FALSE;
     }
 
     uint GetNumSegments( void )
